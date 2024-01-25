@@ -1,11 +1,4 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Jan  8 18:00:33 2024
-
-@author: valeriastufano
-"""
-
+import streamlit as st
 from langchain_experimental.agents.agent_toolkits import create_pandas_dataframe_agent
 from langchain.llms import HuggingFaceHub
 import os
@@ -20,7 +13,7 @@ data = pd.read_csv("supply_chain_data.csv", encoding='ISO-8859-1')
 
 # Create a Pandas Agent with the Hugging Face Hub language model
 llm = HuggingFaceHub(
-    repo_id="mistralai/Mistral-7B-v0.1", 
+    repo_id="mistralai/Mistral-7B-Instruct-v0.2", 
     huggingfacehub_api_token=os.environ["HUGGINGFACEHUB_API_TOKEN"],
     model_kwargs={"temperature": 0.5, "max_length": 64, "max_new_tokens": 512}
 )
@@ -28,7 +21,31 @@ llm = HuggingFaceHub(
 # Create a Pandas Agent for analysis
 agent = create_pandas_dataframe_agent(llm, data, verbose=True)
 
-# Execute prompts using the Pandas Agent
+# Streamlit app
+st.title("Supply Chain Chatbot")
 
-agent.run("Write a brief summany of what the data is about")
-agent.run("create a pie chart representing the percetage of sales for each product type")
+# User input for chatbot
+user_input = st.text_input("You:", "")
+
+# Display chat history
+chat_history = []
+
+# Process user input and display chatbot response
+if st.button("Send"):
+    chat_history.append(f"You: {user_input}")
+    
+    # Execute the user input using the Pandas Agent
+    bot_response = agent.run(user_input)
+    
+    # Display chatbot response
+    chat_history.append(f"Bot: {bot_response}")
+
+# Display chat history
+st.text("\n".join(chat_history))
+
+# Print statements for debugging
+print("HF Token:", os.environ["HUGGINGFACEHUB_API_TOKEN"])
+print("Data Shape:", data.shape)
+print("Model Configuration:", llm.get_config())
+print("User Input:", user_input)
+print("Bot Response:", bot_response)
