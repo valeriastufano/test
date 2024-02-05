@@ -4,10 +4,9 @@ import streamlit as st
 from langchain_experimental.agents.agent_toolkits import create_pandas_dataframe_agent
 from langchain.llms import HuggingFaceHub
 import pandas as pd
-from getpass import getpass
 
 # Set the Hugging Face Hub API token
-os.environ["HUGGINGFACEHUB_API_TOKEN"] = getpass("HF Token:")
+os.environ["HUGGINGFACEHUB_API_TOKEN"] = "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"
 
 def create_agent(data):
     llm = HuggingFaceHub(
