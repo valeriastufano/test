@@ -9,11 +9,17 @@ import pandas as pd
 os.environ["HUGGINGFACEHUB_API_TOKEN"] = "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"
 
 def create_agent(data):
-    llm = HuggingFaceHub(
-        repo_id="mistralai/Mistral-7B-Instruct-v0.2", 
-        huggingfacehub_api_token=os.environ["HUGGINGFACEHUB_API_TOKEN"],
-        model_kwargs={"temperature": 0.5, "max_length": 64, "max_new_tokens": 512}
-    )
+    print("Attempting to create HuggingFaceHub instance...")
+    try:
+        llm = HuggingFaceHub(
+            repo_id="mistralai/Mistral-7B-Instruct-v0.2", 
+            huggingfacehub_api_token=os.environ["HUGGINGFACEHUB_API_TOKEN"],
+            model_kwargs={"temperature": 0.5, "max_length": 64, "max_new_tokens": 512}
+        )
+        print("HuggingFaceHub instance created successfully.")
+    except Exception as e:
+        print(f"Error creating HuggingFaceHub instance: {e}")
+        raise e
 
     # Create a Pandas Agent for analysis
     agent = create_pandas_dataframe_agent(llm, data, verbose=True)
