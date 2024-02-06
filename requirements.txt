@@ -1,4 +1,5 @@
-streamlit
-pandas
-langchain_experimental
-langchain
+pip install streamlit
+pip install pandas
+pip install langchain_experimental
+pip install langchain
+pip install huggingface_hub
