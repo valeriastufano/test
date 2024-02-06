@@ -1,5 +1,6 @@
-pip install streamlit
-pip install pandas
-pip install langchain_experimental
-pip install langchain
-pip install huggingface_hub==0.0.14
+pip3 install streamlit
+pip3 install pandas
+pip3 install langchain_experimental
+pip3 install langchain
+pip3 install huggingface_hub==0.0.14
+pip3 install langchain-community
