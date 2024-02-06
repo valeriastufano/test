@@ -1,3 +1,6 @@
+import sys
+sys.path.append("/Users/valeriastufano/anaconda3/envs/myenv/lib/python3.9/site-packages")
+
 import os
 import json
 import streamlit as st
